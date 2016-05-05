@@ -1,0 +1,3 @@
+[submodule "drupal/scripts/cmu_shared"]
+	path = drupal/scripts/cmu_shared
+	url = git.library.cmu.edu:/git/vagrant/scripts.git
