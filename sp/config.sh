@@ -11,6 +11,21 @@ openssl req -x509 -nodes -days 3650 -newkey rsa:2048 \
      -subj /CN=sp.example.org 2>/dev/null
 
 mkdir -p /var/www/vhosts/sp.example.org
+mkdir -p /var/www/vhosts/sp.example.org/secure-all
+cat > /var/www/vhosts/sp.example.org/secure-all/index.cgi << EOF
+#!/bin/bash
+
+echo "Content-type:  text/html"
+echo
+date
+echo "<hr>"
+echo "<pre>"
+env|sort
+echo "</pre>"
+EOF
+sed -i "s/#\(AddHandler cgi-script .cgi\)/\1/g" /etc/apache2/mods-available/mime.conf
+
+chmod a+x /var/www/vhosts/sp.example.org/secure-all/index.cgi
 
 cp $r/apache.conf /etc/apache2/sites-available/sp.conf
 
