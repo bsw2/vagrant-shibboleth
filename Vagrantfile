@@ -31,7 +31,7 @@ Vagrant.configure(2) do |config|
     config.vm.provision "metadata-idp3", type: "shell", path: "sp/metadata.sh", args: "+ idp3 https://idp3.example.org/idp/shibboleth"
   end
     
-  config.vm.define "idp" do |config|
+  config.vm.define "idp", autostart: false do |config|
     config.vm.hostname = "idp.example.org"
     config.vm.network "private_network", ip: "172.16.80.4"
     config.vm.provision "install",  type: "shell", path: "idp/install.sh"
