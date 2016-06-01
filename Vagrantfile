@@ -64,7 +64,7 @@ Vagrant.configure(2) do |config|
     config.vm.provision :shell, :path => "./drupal/scripts/cmu_shared/ubuntu/install_composer_drush", :args => site_name
     config.vm.provision :shell, :path => "./drupal/scripts/cmu_shared/ubuntu/install_drupal", :args => site_name
     config.vm.provision :shell, :path => "./drupal/scripts/cmu_shared/ubuntu/swapspace", :args => site_name
-    #config.vm.provision :shell, :path => "./drupal/scripts/non_shared/drupal_libraryonly", :args => site_name
+    config.vm.provision :shell, :path => "./drupal/scripts/non_shared/drupal_libraryonly", :args => site_name
     #config.vm.provision :shell, :path => "./drupal/scripts/non_shared/solr_libraryonly", :args => site_name
     config.vm.provision :shell, :path => "./drupal/scripts/non_shared/add_sites.sh", :args => site_name
   end

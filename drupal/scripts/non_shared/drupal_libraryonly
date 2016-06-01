@@ -1,0 +1,147 @@
+echo "******************* Setup drupal library only"
+
+if [ -x /vagrant/.env ]; then
+source /vagrant/.env
+fi
+
+
+MYSQL_DRUPAL_USER=${MYSQL_DRUPAL_USER:=drupal}
+MYSQL_DRUPAL_PASS=${MYSQL_DRUPAL_PASS:=password}
+
+SITENAME=${1:-libraryonly}
+
+DBNAME=drupal_libraryonly
+
+mkdir -p /usr/local/share/slackware
+mount 128.2.20.134:/usr/local/share/slackware /usr/local/share/slackware
+
+
+
+
+apt-get  update -qq
+apt-get -q -y  install git
+apt-get -q -y install curl libcurl3 libcurl4-openssl-dev php5-curl
+service apache2 restart
+
+
+cd /var/www/html/
+
+if [ -d .git ]; then
+	git submodule add -f git://git.library.cmu.edu/git/drupal/themes/CarnegieMellonUniversityLibraries.git sites/all/themes/custom/CarnegieMellonUniversityLibraries
+
+	git submodule init
+	git submodule update
+else
+	git clone git://git.library.cmu.edu/git/drupal/themes/CarnegieMellonUniversityLibraries.git sites/all/themes/custom/CarnegieMellonUniversityLibraries
+fi
+
+mkdir -p /var/www/html/sites/all/libraries/easyrdf
+curl http://www.easyrdf.org/downloads/easyrdf-0.9.0.tar.gz| tar -C /var/www/html/sites/all/libraries/easyrdf/ -zxf - --strip-components=1
+
+cd /var/www/html/sites
+sed -i "\$s,\$,\n\$sites['woolstrum.library.cmu.edu']='${SITENAME}';," sites.php
+
+mkdir -p /var/www/html/sites/${SITENAME}/files
+cp -avf default/default.settings.php ${SITENAME}/settings.php
+sudo chown www-data ${SITENAME}/*
+
+cd /var/www/html/sites/${SITENAME}
+echo mysql -u ${MYSQL_DRUPAL_USER} -p${MYSQL_DRUPAL_PASS} -e "CREATE DATABASE ${DBNAME}"
+mysql -u ${MYSQL_DRUPAL_USER} -p${MYSQL_DRUPAL_PASS} -e "CREATE DATABASE ${DBNAME}"
+echo drush site-install standard --db-url=mysql://${MYSQL_DRUPAL_USER}:${MYSQL_DRUPAL_PASS}@localhost/${DBNAME} --account-name=dev --account-pass=fred  --account-mail=bsw2@woolstrum.library.cmu.edu --site-mail=bsw2@woolstrum.library.cmu.edu --site-name=${SITENAME} --sites-subdir=${SITENAME}
+yes|sudo -u www-data drush site-install standard --db-url=mysql://${MYSQL_DRUPAL_USER}:${MYSQL_DRUPAL_PASS}@localhost/${DBNAME} --account-name=dev --account-pass=fred  --account-mail=bsw2@woolstrum.library.cmu.edu --site-mail=bsw2@woolstrum.library.cmu.edu --site-name=${SITENAME} --sites-subdir=${SITENAME}
+drush pm-enable -y git_deploy
+drush pm-enable -y module_filter views_ui
+drush pm-disable -y toolbar
+drush pm-enable -y module_filter  admin_menu_toolbar
+drush pm-enable -y syslog devel devel_debug_log
+
+
+for MODULE in  rdfx uuid easyrdf entity
+	do
+		if [ ! -d /var/www/html/sites/all/modules/contrib/${MODULE} ]; then
+			drush pm-download --package-handler=git_drupalorg ${MODULE}
+		else
+			echo "already have ${MODULE}"
+		fi
+	done
+
+
+#drush pm-disable -y dblog
+
+#drush pm-enable -y storage
+
+drush pm-enable -y simpletest
+
+drush pm-enable -y CarnegieMellonUniversityLibraries sassy
+drush vset theme_default 'CarnegieMellonUniversityLibraries'
+
+tar -C /var/www/html/sites/all/modules/contrib -xf /usr/local/share/slackware/drupal/modules/misc/fontawesome-7.x-2.5.tar.gz 
+mkdir -p /var/www/html/sites/all/libraries/fontawesome
+bsdtar -C /var/www/html/sites/all/libraries/fontawesome -xf /usr/local/share/slackware/drupal/libraries/font-awesome-4.2.0.zip  --strip-components=1
+
+
+for MODULE in  misc/libraries-7.x-2.2.tar.gz admin/admin_views-7.x-1.5.tar.gz develop/ckeditor-7.x-1.16.tar.gz  wysiwyg/ckeditor_link-7.x-2.3.tar.gz fields/email-7.x-1.3.tar.gz misc/entityreference-7.x-1.1.tar.gz misc/faq-7.x-1.1.tar.gz fields/field_permissions-7.x-1.0-beta2.tar.gz misc/file_entity-7.x-2.x-dev.tar.gz old/jquery_update-7.x-3.0-alpha2.tar.gz fields/link-7.x-1.3.tar.gz admin/masquerade-7.x-1.0-rc7.tar.gz media/media-7.x-2.x-dev.tar.gz media/media_library-7.x-1.1.tar.gz admin/nagios-7.x-1.3.tar.gz fields/name-7.x-1.9.tar.gz fields/phone-7.x-1.0-beta1.tar.gz misc/pathauto-7.x-1.3.tar.gz  fields/phone-7.x-1.0-beta1.tar.gz misc/rules-7.x-2.9.tar.gz misc/tb_megamenu-7.x-1.0-rc2.tar.gz  misc/tipsy-7.x-1.0-rc1.tar.gz misc/token-7.x-1.6.tar.gz  views/views_accordion-7.x-1.1.tar.gz views/views_fluid_grid-7.x-3.0.tar.gz fields/addressfield-7.x-1.2.tar.gz develop/advanced_help_hint-7.x-1.2.tar.gz search/apachesolr-7.x-1.8.tar.gz calendaring/date-7.x-2.9.tar.gz misc/entityconnect-7.x-1.0-rc5.tar.gz search/facetapi-7.x-1.5.tar.gz misc/faqfield-7.x-1.4.tar.gz feeds/feeds-7.x-2.0-beta1.tar.gz feeds/feeds_tamper-7.x-1.x-dev.tar.gz feeds/feeds_xpathparser-7.x-1.1.tar.gz feeds/feeds_ex-7.x-1.0-beta2.tar.gz admin/filter_perms-7.x-1.0.tar.gz misc/freelinking-7.x-3.8.tar.gz misc/job_scheduler-7.x-2.0-alpha3.tar.gz misc/menu_fields-7.x-1.0-alpha2.tar.gz admin/node_convert-7.x-1.2.tar.gz develop/pm-7.x-2.0.tar.gz misc/prepopulate-7.x-2.0.tar.gz auth/shib_auth-7.x-4.3.tar.gz misc/tagclouds-7.x-1.10.tar.gz fields/term_level-7.x-1.2.tar.gz develop/views_bulk_operations-7.x-3.3.tar.gz feeds/views_data_export-7.x-3.0-beta8.tar.gz views/views_vertical_tabs-7.x-1.0.tar.gz misc/wikitools-7.x-1.x-dev.tar.gz fields/field_group-7.x-1.5.tar.gz misc/entityreference-7.x-1.1.tar.gz views/comment_counter-7.x-1.0-alpha1.tar.gz
+	do
+		NAME=$(echo $(basename ${MODULE})|cut -d '-' -f 1)
+		if [ ! -d /var/www/html/sites/all/modules/contrib/${NAME} ]; then
+			tar -C /var/www/html/sites/all/modules/contrib/ -xf /usr/local/share/slackware/drupal/modules/${MODULE}
+		else
+			echo "already have ${NAME}"
+		fi
+	done
+
+for THEME in  adminimal_theme-7.x-1.23.tar.gz
+	do
+		NAME=$(echo $(basename ${THEME})|cut -d '-' -f 1)
+		if [ ! -d /var/www/html/sites/all/themes/contrib/${NAME} ]; then
+			tar -C /var/www/html/sites/all/themes/contrib/ -xf /usr/local/share/slackware/drupal/themes/${THEME}
+		else
+			echo "already have ${NAME}"
+		fi
+	done
+
+for MODULE in cmulib_pmservice cmulib_metadata_field_tracker cmulib_dlists
+	do
+		if [ ! -d /var/www/html/sites/all/modules/custom/${MODULE} ]; then
+			git clone git://git.library.cmu.edu/git/drupal/modules/${MODULE}.git /var/www/html/sites/all/modules/custom/${MODULE}
+		else
+			echo "already have ${MODULE}"
+		fi
+	done
+
+
+drush pm-enable -y entity entityreference
+drush pm-enable -y entityconnect
+drush pm-enable -y addressfield admin_devel admin_menu admin_menu_toolbar admin_views advanced_help_hint apachesolr apachesolr_search block book ckeditor ckeditor_link cmulib_dlists cmulib_metadata_field_tracker cmulib_pmservice comment contextual ctools ctools_access_ruleset current_search dashboard date date_api date_popup date_tools dblog devel devel_debug_log email  entity_token facetapi faq faqfield feeds feeds_ex feeds_tamper feeds_tamper_ui feeds_ui feeds_xpathparser field field_group field_permissions field_sql_storage field_ui file file_entity filter filter_perms fontawesome freelinking freelinking_prepopulate git_deploy help image job_scheduler jquery_update libraries link list masquerade media media_internet media_library menu menu_fields module_filter nagios name node node_convert number options overlay path pathauto phone pm pmnote pmorganization pmproject pmtask pmteam pmticket prepopulate prepro rules rules_admin rules_scheduler sassy search shib_auth syslog system tagclouds taxonomy tb_megamenu term_level text tipsy token tracker trigger update user views views_accordion views_bulk_operations views_data_export views_fluid_grid views_ui views_vertical_tabs wikitools
+
+drush pm-enable -y adminimal
+drush vset admin_theme 'adminimal'
+
+sudo chown -R www-data:www-data files settings.php
+
+#doesnt seem to deal with prepo until you go to admin/config/media/prepro
+#and save settings
+
+drush vset --format=json prepro '{ "filetypes": { "sass": { "compile_handler": "sassy\/sassy", "cache_handler": "prepro\/onload", "cache_path": "public:\/\/prepro" }, "scss": { "compile_handler": "sassy\/sassy", "cache_handler": "prepro\/onload", "cache_path": "public:\/\/prepro" } }, "additional": { "sassy": { "watchdog": 0, "debug": 0, "errors": "watchdog", "style": "nested" } }, "show_warnings": 1 }'
+curl -s -N http://libraryonly-vm.library.cmu.edu/sites/libraryonly.library.cmu.edu/drupal-libraryonly.sql.bz2 |bzcat|sed "s/drupal-libraryonly/drupal_libraryonly/g"|/usr/bin/mysql --force -u${MYSQL_DRUPAL_USER} -p${MYSQL_DRUPAL_PASS} ${DBNAME}
+
+drush updatedb -y
+drush cc all
+
+cat << END_OF_MESSAGE
+
+
+System is installed, with a copy of the database from the real libraryonly.library.cmu.edu
+
+
+you will need to reset the dev password for login:
+
+vagrant ssh
+cd /var/www/html/sites/libraryonly/
+drush user-password dev --password=mynewpassword
+
+then login in at:
+http://locahost:3080/user
+
+END_OF_MESSAGE
