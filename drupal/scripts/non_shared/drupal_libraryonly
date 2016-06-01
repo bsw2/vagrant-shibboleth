@@ -126,6 +126,9 @@ sudo chown -R www-data:www-data files settings.php
 drush vset --format=json prepro '{ "filetypes": { "sass": { "compile_handler": "sassy\/sassy", "cache_handler": "prepro\/onload", "cache_path": "public:\/\/prepro" }, "scss": { "compile_handler": "sassy\/sassy", "cache_handler": "prepro\/onload", "cache_path": "public:\/\/prepro" } }, "additional": { "sassy": { "watchdog": 0, "debug": 0, "errors": "watchdog", "style": "nested" } }, "show_warnings": 1 }'
 curl -s -N http://libraryonly-vm.library.cmu.edu/sites/libraryonly.library.cmu.edu/drupal-libraryonly.sql.bz2 |bzcat|sed "s/drupal-libraryonly/drupal_libraryonly/g"|/usr/bin/mysql --force -u${MYSQL_DRUPAL_USER} -p${MYSQL_DRUPAL_PASS} ${DBNAME}
 
+drush vset shib_auth_full_handler_url 'https://drupal.example.org/Shibboleth.sso/Login'
+drush vset shib_auth_full_logout_url 'https://drupal.example.org/Shibboleth.sso/Logout'
+
 drush updatedb -y
 drush cc all
 
