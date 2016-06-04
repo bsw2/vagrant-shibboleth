@@ -10,6 +10,7 @@ Vagrant.configure(2) do |config|
   # DOES NOT WORK: config.vm.synced_folder ".", "/vagrant", type: 'virtualbox'
 
   config.vm.provision "base",    type: "shell", path: "common/base.sh"
+  config.vm.provision "fixroutes", run: "always", type: "shell", path: "common/fixroutes.sh"
 
   
   config.vm.define "ldap" do |config|

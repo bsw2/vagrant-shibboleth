@@ -1,10 +1,10 @@
 . ./config
 
 vagrant up ldap --no-provision
-vagrant provision ldap --provision-with base,install # debug
+vagrant provision ldap --provision-with base,fixroutes,install # debug
 
 vagrant up sp  --no-provision
-vagrant provision sp --provision-with base,dev,install,config,eds
+vagrant provision sp --provision-with base,dev,fixroutes,install,config,eds
 SSO=${SSO} vagrant provision sp --provision-with sso
 
 if [ "${IDP2}" == "enabled" ]; then
