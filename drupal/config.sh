@@ -43,6 +43,8 @@ xmlstarlet ed -L \
   -u "//_:Errors/@logoLocation"   -v "/shibboleth-sp/logo.jpg" \
   /etc/shibboleth/shibboleth2.xml 
 
+sed -i "s/sp.example.org/drupal.example.org/g" /etc/shibboleth/shibboleth2.xml
+
 xmlstarlet ed -L \
   -s /_:Attributes -t elem -n N \
   -i //N -t attr -n 'name' -v urn:mace:dir:attribute-def:mail \
