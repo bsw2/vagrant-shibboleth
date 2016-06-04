@@ -9,3 +9,7 @@
 /vagrant/drupal/scripts/non_shared/drupal_libraryonly $1
 #/vagrant/drupal/scripts/non_shared/solr_libraryonly $1
 /vagrant/drupal/scripts/non_shared/add_sites.sh $1
+
+sudo sed -i 's,\(RewriteCond %{REQUEST_URI} !=/favicon.ico\),\0\n  RewriteCond %{REQUEST_URI} !^/Shibboleth.sso($|/),g' /var/www/html/.htaccess
+sudo sed -i 's,\(# Protect files\),AuthType Shibboleth\nShibRequireSession Off\nShibUseHeaders On\nrequire shibboleth\n\n\0,g' /var/www/html/.htaccess
+
