@@ -57,17 +57,8 @@ Vagrant.configure(2) do |config|
     config.vm.hostname = "drupal.example.org"
     config.vm.network "private_network", ip: "172.16.80.6"
     site_name = "libraryonly"
-    config.vm.provision :shell, :path => "./drupal/scripts/cmu_shared/ubuntu/misc", :args => site_name
-    config.vm.provision :shell, :path => "./drupal/scripts/cmu_shared/ubuntu/install_apache", :args => site_name
-    config.vm.provision :shell, :path => "./drupal/scripts/cmu_shared/ubuntu/install_mysql", :args => site_name
-    config.vm.provision :shell, :path => "./drupal/scripts/cmu_shared/ubuntu/install_postgres.sh", :args => site_name
-    config.vm.provision :shell, :path => "./drupal/scripts/cmu_shared/ubuntu/install_apachephp", :args => site_name
-    config.vm.provision :shell, :path => "./drupal/scripts/cmu_shared/ubuntu/install_composer_drush", :args => site_name
-    config.vm.provision :shell, :path => "./drupal/scripts/cmu_shared/ubuntu/install_drupal", :args => site_name
-    config.vm.provision :shell, :path => "./drupal/scripts/cmu_shared/ubuntu/swapspace", :args => site_name
-    config.vm.provision :shell, :path => "./drupal/scripts/non_shared/drupal_libraryonly", :args => site_name
-    #config.vm.provision :shell, :path => "./drupal/scripts/non_shared/solr_libraryonly", :args => site_name
-    config.vm.provision :shell, :path => "./drupal/scripts/non_shared/add_sites.sh", :args => site_name
+
+    config.vm.provision "drupal", type: "shell", path: "./drupal/all", :args => site_name
   end
 end
 

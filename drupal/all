@@ -1,0 +1,11 @@
+/vagrant/drupal/scripts/cmu_shared/ubuntu/misc $1
+/vagrant/drupal/scripts/cmu_shared/ubuntu/install_apache $1
+/vagrant/drupal/scripts/cmu_shared/ubuntu/install_mysql $1
+/vagrant/drupal/scripts/cmu_shared/ubuntu/install_postgres.sh $1
+/vagrant/drupal/scripts/cmu_shared/ubuntu/install_apachephp $1
+/vagrant/drupal/scripts/cmu_shared/ubuntu/install_composer_drush $1
+/vagrant/drupal/scripts/cmu_shared/ubuntu/install_drupal $1
+/vagrant/drupal/scripts/cmu_shared/ubuntu/swapspace $1
+/vagrant/drupal/scripts/non_shared/drupal_libraryonly $1
+#/vagrant/drupal/scripts/non_shared/solr_libraryonly $1
+/vagrant/drupal/scripts/non_shared/add_sites.sh $1
