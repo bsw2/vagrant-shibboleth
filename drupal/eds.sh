@@ -1,4 +1,4 @@
-r=/vagrant/sp
+r=/vagrant/drupal
 . $r/common
 mkdir -p ${EDS_DEST}
 cd $r/_work/${EDS_D}

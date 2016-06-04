@@ -1,18 +1,18 @@
-r=/vagrant/sp
+r=/vagrant/drupal
 
 openssl req -batch -x509 -nodes -days 3650 -newkey rsa:2048 \
-  -keyout /etc/ssl/private/sp.example.org.key \
-     -out /etc/ssl/certs/sp.example.org.crt \
-     -subj /CN=sp.example.org 2>/dev/null
+  -keyout /etc/ssl/private/drupal.example.org.key \
+     -out /etc/ssl/certs/drupal.example.org.crt \
+     -subj /CN=drupal.example.org 2>/dev/null
 
 openssl req -x509 -nodes -days 3650 -newkey rsa:2048 \
   -keyout /etc/shibboleth/sp-key.pem \
      -out /etc/shibboleth/sp-cert.pem \
-     -subj /CN=sp.example.org 2>/dev/null
+     -subj /CN=drupal.example.org 2>/dev/null
 
-mkdir -p /var/www/vhosts/sp.example.org
-mkdir -p /var/www/vhosts/sp.example.org/secure-all
-cat > /var/www/vhosts/sp.example.org/secure-all/index.cgi << EOF
+mkdir -p /var/www/vhosts/drupal.example.org
+mkdir -p /var/www/vhosts/drupal.example.org/secure-all
+cat > /var/www/vhosts/drupal.example.org/secure-all/index.cgi << EOF
 #!/bin/bash
 
 echo "Content-type:  text/html"
@@ -25,7 +25,7 @@ echo "</pre>"
 EOF
 sed -i "s/#\(AddHandler cgi-script .cgi\)/\1/g" /etc/apache2/mods-available/mime.conf
 
-chmod a+x /var/www/vhosts/sp.example.org/secure-all/index.cgi
+chmod a+x /var/www/vhosts/drupal.example.org/secure-all/index.cgi
 
 cp $r/apache.conf /etc/apache2/sites-available/sp.conf
 
@@ -39,7 +39,7 @@ xmlstarlet ed -L \
   -u "//_:Handler[@type='Status']/@acl" -v "127.0.0.1 ::1 172.16.80.1" \
   -u "//_:Handler[@type='Session']/@showAttributeValues" -v "true" \
   -u "//_:Errors/@supportContact" -v "aai-hotline@example.org" \
-  -u "//_:Errors/@helpLocation"   -v "https://sp.example.org/contact/" \
+  -u "//_:Errors/@helpLocation"   -v "https://drupal.example.org/contact/" \
   -u "//_:Errors/@logoLocation"   -v "/shibboleth-sp/logo.jpg" \
   /etc/shibboleth/shibboleth2.xml 
 

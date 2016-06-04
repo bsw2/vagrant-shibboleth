@@ -1,6 +1,6 @@
 r=/vagrant/idp3
 
-curl -ks -o /opt/shibboleth-idp/metadata/sp-metadata.xml https://sp.example.org/Shibboleth.sso/Metadata
+curl -ks -o /opt/shibboleth-idp/metadata/sp-metadata.xml https://drupal.example.org/Shibboleth.sso/Metadata
 
 apt-get install -y xmlstarlet
 

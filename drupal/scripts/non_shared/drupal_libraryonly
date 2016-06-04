@@ -129,6 +129,8 @@ curl -s -N http://libraryonly-vm.library.cmu.edu/sites/libraryonly.library.cmu.e
 drush vset shib_auth_full_handler_url 'https://drupal.example.org/Shibboleth.sso/Login'
 drush vset shib_auth_full_logout_url 'https://drupal.example.org/Shibboleth.sso/Logout'
 
+sudo cp -avf /var/www/vhosts/drupal.example.org/secure-all /var/www/html/
+
 drush updatedb -y
 drush cc all
 

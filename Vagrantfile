@@ -58,6 +58,14 @@ Vagrant.configure(2) do |config|
     config.vm.network "private_network", ip: "172.16.80.6"
     site_name = "libraryonly"
 
+    config.vm.provision "dev",           type: "shell", path: "drupal/dev.sh"
+    config.vm.provision "install",       type: "shell", path: "drupal/install.sh"
+    config.vm.provision "config",        type: "shell", path: "drupal/config.sh"
+    config.vm.provision "eds",           type: "shell", path: "drupal/eds.sh"
+    config.vm.provision "sso",           type: "shell", path: "drupal/sso.sh",      args: "#{ENV['SSO']}"
+    config.vm.provision "metadata-idp",  type: "shell", path: "drupal/metadata.sh", args: "+ idp  https://idp.example.org/idp/shibboleth"
+    config.vm.provision "metadata-idp3", type: "shell", path: "drupal/metadata.sh", args: "+ idp3 https://idp3.example.org/idp/shibboleth"
+
     config.vm.provision "drupal", type: "shell", path: "./drupal/all", :args => site_name
   end
 end
