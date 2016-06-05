@@ -37,6 +37,7 @@ sudo JAVA_HOME=/usr ./build.sh -Didp.target.dir=${DEST}
 
 cd ${DEST}/conf
 sudo patch -p1 < $r/idp-conf.patch
+sudo sed -i "s/dc=example,dc=org/dc=andrew,dc=cmu,dc=edu/g" /opt/shibboleth-idp/conf/ldap.properties
 cd ${DEST}
 sudo patch -p1 < $r/attributes.patch
 sudo patch -p1 < $r/tou.patch
