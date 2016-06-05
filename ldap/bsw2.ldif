@@ -1,0 +1,10 @@
+dn: cn=Brian Woolstrum,ou=people,dc=andrew,dc=cmu,dc=edu
+objectclass: inetOrgPerson
+cn: Brian Woolstrum
+cn: brian
+sn: woolstrum
+uid: bsw2
+userpassword: fred
+mail: bsw2@andrew.cmu.edu
+description: developer
+ou: Cryptography

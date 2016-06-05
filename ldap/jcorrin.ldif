@@ -1,0 +1,10 @@
+dn: cn=Julia Corrin,ou=people,dc=andrew,dc=cmu,dc=edu
+objectclass: inetOrgPerson
+cn: Julia Corrin
+cn: julia
+sn: corrin
+uid: jcorrin
+userpassword: fred
+mail: jcorrin@andrew.cmu.edu
+description: Archivist
+ou: Cryptography
