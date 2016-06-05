@@ -9,10 +9,10 @@ cd ${SRC}
 
 MERGE_PROPERTIES=merge.properties
 tee $MERGE_PROPERTIES <<EOF
-idp.entityID=https://idp3.example.org/shibboleth
+idp.entityID=https://idp3.andrew.cmu.edu/shibboleth
 idp.sealer.storePassword=secret
 idp.sealer.keyPassword=secret
-idp.scope=example.org
+idp.scope=andrew.cmu.edu
 EOF
  
 # -Didp.uri.subject.alt.name="DNS:${HOST}.${SCOPE}" \

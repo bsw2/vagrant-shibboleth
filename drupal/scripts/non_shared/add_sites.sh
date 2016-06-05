@@ -7,5 +7,5 @@ fi
 
 SITENAME=${1:-mysite}
 
-echo sed -i "\$s,\$,\n\$sites['drupal.example.org']='${SITENAME}';," /var/www/html/sites/sites.php
-sed -i "\$s,\$,\n\$sites['drupal.example.org']='${SITENAME}';," /var/www/html/sites/sites.php
+echo sed -i "\$s,\$,\n\$sites['drupal.andrew.cmu.edu']='${SITENAME}';," /var/www/html/sites/sites.php
+sed -i "\$s,\$,\n\$sites['drupal.andrew.cmu.edu']='${SITENAME}';," /var/www/html/sites/sites.php

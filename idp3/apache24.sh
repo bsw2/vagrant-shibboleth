@@ -7,9 +7,9 @@ sudo service apache2 restart
 
 IP=172.16.80.5
 HOST=idp3
-SCOPE=example.org
+SCOPE=andrew.cmu.edu
 
-sudo tee /etc/apache2/sites-available/idp3.example.org.conf <<EOF
+sudo tee /etc/apache2/sites-available/idp3.andrew.cmu.edu.conf <<EOF
 ################################################
 #
 # Bitte im Folgenden 'IDP-IP-ADRESSE' und ggf. 'IDP-IPv6-ADRESSE'
@@ -124,6 +124,6 @@ sudo openssl req -batch -x509 -nodes -days 3650 -newkey rsa:2048 \
 sudo chmod 640 /etc/ssl/private/${HOST}.${SCOPE}.key.pem
 sudo chown root:ssl-cert /etc/ssl/private/${HOST}.${SCOPE}.key.pem
 
-sudo a2ensite idp3.example.org
+sudo a2ensite idp3.andrew.cmu.edu
 sudo service apache2 reload
 

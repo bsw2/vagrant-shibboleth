@@ -1,20 +1,20 @@
-dn: ou=apps,dc=example,dc=org
+dn: ou=apps,dc=andrew,dc=cmu,dc=edu
 ou: apps
 description: All ldap application accounts in the organization
 objectClass: organizationalUnit
 
-dn: cn=shibboleth,ou=apps,dc=example,dc=org
+dn: cn=shibboleth,ou=apps,dc=andrew,dc=cmu,dc=edu
 cn: shibboleth
 objectClass: simpleSecurityObject
 objectClass: organizationalRole
 userPassword: readonly
 
-dn: ou=people,dc=example,dc=org
+dn: ou=people,dc=andrew,dc=cmu,dc=edu
 ou: people
 description: All people in organization
 objectClass: organizationalUnit
 
-dn: cn=Robert Smith,ou=people,dc=example,dc=org
+dn: cn=Robert Smith,ou=people,dc=andrew,dc=cmu,dc=edu
 objectclass: inetOrgPerson
 cn: Robert Smith
 cn: Robert J Smith
@@ -24,31 +24,31 @@ uid: robert
 userpassword: rJsmitH
 carlicense: HISCAR 123
 homephone: 555-111-2222
-mail: r.smith@example.org
-mail: rsmith@example.org
-mail: bob.smith@example.org
+mail: r.smith@andrew.cmu.edu
+mail: rsmith@andrew.cmu.edu
+mail: bob.smith@andrew.cmu.edu
 description: swell guy
 ou: Human Resources
 
-dn: cn=Alice Wonderland,ou=people,dc=example,dc=org
+dn: cn=Alice Wonderland,ou=people,dc=andrew,dc=cmu,dc=edu
 objectclass: inetOrgPerson
 cn: Alice Wonderland
 cn: alice
 sn: wonderland
 uid: alice
 userpassword: wonderland
-mail: alice@example.org
+mail: alice@andrew.cmu.edu
 description: friend of bob
 ou: Cryptography
 
-dn: cn=Bob Wonderland,ou=people,dc=example,dc=org
+dn: cn=Bob Wonderland,ou=people,dc=andrew,dc=cmu,dc=edu
 objectclass: inetOrgPerson
 cn: Bob Wonderland
 cn: bob
 sn: wonderland
 uid: bob
 userpassword: wonderland
-mail: bob@example.org
+mail: bob@andrew.cmu.edu
 description: friend of bob
 ou: Cryptography
 

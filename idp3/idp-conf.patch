@@ -20,8 +20,8 @@ index 232e93d..4ab1543 100644
  
      org.ldaptive.jaas.LdapLoginModule required
 -      ldapUrl="ldap://localhost:10389"
-+      ldapUrl="ldap://ldap.example.org"
-       baseDn="ou=people,dc=example,dc=org"
++      ldapUrl="ldap://ldap.andrew.cmu.edu"
+       baseDn="ou=people,dc=andrew,dc=cmu,dc=edu"
        userFilter="uid={user}";
  
 -};
@@ -35,10 +35,10 @@ index 50ea25a..59a4574 100644
  idp.encryption.cert= %{idp.home}/credentials/idp-encryption.crt
  #idp.encryption.key.2 = %{idp.home}/credentials/idp-encryption-old.key
  #idp.encryption.cert.2 = %{idp.home}/credentials/idp-encryption-old.crt
-+#idp.signing.key= /etc/ssl/private/idp3.example.org.key.pem
-+#idp.signing.cert= /etc/ssl/localcerts/idp3.example.org.crt.pem
-+#idp.encryption.key= /etc/ssl/private/idp3.example.org.key.pem
-+#idp.encryption.cert= /etc/ssl/localcerts/idp3.example.org.crt.pem
++#idp.signing.key= /etc/ssl/private/idp3.andrew.cmu.edu.key.pem
++#idp.signing.cert= /etc/ssl/localcerts/idp3.andrew.cmu.edu.crt.pem
++#idp.encryption.key= /etc/ssl/private/idp3.andrew.cmu.edu.key.pem
++#idp.encryption.cert= /etc/ssl/localcerts/idp3.andrew.cmu.edu.crt.pem
  
  # Sets the bean ID to use as a default security configuration set
  #idp.security.config = shibboleth.DefaultSecurityConfiguration
@@ -52,18 +52,18 @@ index 62f4d21..2221021 100644
  ## Connection properties ##
 -idp.authn.LDAP.ldapURL                          = ldap://localhost:10389
 -#idp.authn.LDAP.useStartTLS                     = true
-+idp.authn.LDAP.ldapURL                          = ldap://ldap.example.org
++idp.authn.LDAP.ldapURL                          = ldap://ldap.andrew.cmu.edu
 +idp.authn.LDAP.useStartTLS                      = false
  #idp.authn.LDAP.useSSL                          = false
  #idp.authn.LDAP.connectTimeout                  = 3000
  
-@@ -30,8 +30,8 @@ idp.authn.LDAP.baseDN                           = ou=people,dc=example,dc=org
+@@ -30,8 +30,8 @@ idp.authn.LDAP.baseDN                           = ou=people,dc=andrew,dc=cmu,dc=edu
  idp.authn.LDAP.userFilter                       = (uid={user})
  # bind search configuration
  # for AD: idp.authn.LDAP.bindDN=adminuser@domain.com
 -idp.authn.LDAP.bindDN                           = uid=myservice,ou=system
 -idp.authn.LDAP.bindDNCredential                 = myServicePassword
-+idp.authn.LDAP.bindDN                           = cn=shibboleth,ou=apps,dc=example,dc=org
++idp.authn.LDAP.bindDN                           = cn=shibboleth,ou=apps,dc=andrew,dc=cmu,dc=edu
 +idp.authn.LDAP.bindDNCredential                 = readonly
  
  # Format DN resolution, used by directAuthenticator, adAuthenticator

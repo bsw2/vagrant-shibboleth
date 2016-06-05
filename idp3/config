@@ -5,4 +5,4 @@ U=http://shibboleth.net/downloads/identity-provider/$V/$F
 
 DEST=/opt/shibboleth-idp
 HOST=idp3
-SCOPE=example.org
+SCOPE=andrew.cmu.edu

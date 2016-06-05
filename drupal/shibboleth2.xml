@@ -20,7 +20,7 @@
     -->
 
     <!-- The ApplicationDefaults element is where most of Shibboleth's SAML bits are defined. -->
-    <ApplicationDefaults entityID="https://drupal.example.org/shibboleth"
+    <ApplicationDefaults entityID="https://drupal.andrew.cmu.edu/shibboleth"
                          REMOTE_USER="eppn persistent-id targeted-id">
 
         <!--
@@ -48,7 +48,7 @@
             </SSO>
             -->
             
-	    <SSO entityID="https://idp.example.org/idp/shibboleth">
+	    <SSO entityID="https://idp.andrew.cmu.edu/idp/shibboleth">
               SAML2 SAML1
             </SSO>
 

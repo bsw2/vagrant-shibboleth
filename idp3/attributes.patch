@@ -67,8 +67,8 @@ index f8c41ba..74068ca 100644
      <!-- Release some attributes to an SP. -->
      <AttributeFilterPolicy id="example1">
 -        <PolicyRequirementRule xsi:type="Requester" value="https://sp.example.org" />
-+        <PolicyRequirementRule xsi:type="Requester" value="https://drupal.example.org/shibboleth" />
-+        <!-- <PolicyRequirementRule xsi:type="Requester" value="https://drupal.example.org" /> -->
++        <PolicyRequirementRule xsi:type="Requester" value="https://drupal.andrew.cmu.edu/shibboleth" />
++        <!-- <PolicyRequirementRule xsi:type="Requester" value="https://drupal.andrew.cmu.edu" /> -->
  
          <AttributeRule attributeID="eduPersonPrincipalName">
              <PermitValueRule xsi:type="ANY" />
